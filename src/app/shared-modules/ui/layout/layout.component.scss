@@ -1,0 +1,12 @@
+.layout{
+    height: 100%;
+    width: 100%;
+
+    &__header{
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

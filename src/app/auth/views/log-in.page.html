@@ -1,0 +1,27 @@
+<div class="log-in">
+    <div class="log-in__main-div">
+        <nz-card class="log-in__form">
+            <div class="log-in__main-div__form__content">
+                <img class="log-in__main-div__form__content__logo" src="../../../assets/logo.svg">
+                <form nz-form   [formGroup]="logInForm"  (ngSubmit)="logInSubmit()" class="log-in__main-div__form__content__form">
+                    <div>
+                        <p class="log-in__main-div__form__content__title">Inicio Sesión - Panel de Control</p>
+                        <nz-form-item class="log-in__main-div__form__content__item">
+                            <nz-form-label nzFor="email" nzRequired [nzSm]="8" [nzXs]="24">Correo</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input label="Correo" name="email" type="email" id="email" placeholder="ejemplo@gmail.com" formControlName="email"/>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item class="log-in__main-div__form__content__item">
+                            <nz-form-label nzFor="password" nzRequired [nzSm]="8" [nzXs]="24">Contraseña</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input label="Contraseña" name="password" type="password" id="password" placeholder="***" formControlName="password"/>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <button nz-button [disabled]="!logInForm.valid" nzType="primary">Iniciar sesión</button>
+                </form>
+            </div>
+        </nz-card>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+.home {
+    width: 100%;
+    height: 100%;
+
+    &__main-div{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        padding-top: 50px;
+
+        &__content {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            color: black;
+
+            &__img {
+                border-radius: 5px;
+                max-width: 300px;
+                margin: 10px 0px;
+                max-width: 160px;
+            }
+
+            &__msg {
+                max-width: 250px;
+                font-weight: bold;
+                font-size: 18px;
+                text-align: center;
+                color: var(--ion-color-primary);
+            }
+        }
+    }
+}

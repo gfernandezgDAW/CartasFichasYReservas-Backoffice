@@ -1,0 +1,26 @@
+<nz-sider>
+  <ul nz-menu nzMode="inline">
+    <li nz-menu-item (click)="navigateTo('home')">
+      <span nz-icon nzType="home"></span>Inicio
+    </li>
+    <li nz-menu-item (click)="navigateTo('users')">
+      <span nz-icon nzType="user"></span>Usuarios
+    </li>
+    <li nz-submenu nzTitle="G.Juegos" nzIcon="unordered-list">
+      <ul>
+        <li nz-menu-item (click)="navigateTo('board-games')">
+          <span><img class="anticon" src="./../../../../assets/games.svg"></span>Juegos
+        </li>
+        <li nz-menu-item (click)="navigateTo('bg-categories')">
+          <span nz-icon nzType="appstore"></span>Categorías
+        </li>
+      </ul>
+    </li>
+    <li nz-menu-item (click)="navigateTo('bookings')">
+      <span nz-icon nzType="calendar"></span>Reservas
+    </li>
+    <li nz-menu-item (click)="navigateTo('suggestions')">
+      <span nz-icon nzType="notification"></span>Sugerencias
+    </li>
+  </ul>
+</nz-sider>

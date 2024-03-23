@@ -1,2 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@import "ng-zorro-antd/ng-zorro-antd.min.css";
+@import "ng-zorro-antd/ng-zorro-antd.dark.css";
+@import "ng-zorro-antd/ng-zorro-antd.compact.css";
+@import "ng-zorro-antd/ng-zorro-antd.aliyun.css";
+$primary-color: #02305F;
+$selected-color: rgba(49, 99, 150, 0.027) ;
 
+*{
+    --antd-wave-shadow-color: $primary-color;
+}
+
+.ant-btn-primary, .ant-layout-header, .ant-layout-sider {
+    border-color: $primary-color !important;
+    background: $primary-color !important;
+    color: #fff !important;
+}
+
+.ant-menu-item-selected, .ant-menu-item-selected::after, .ant-menu-submenu, .ant-menu-submenu-active, .ant-menu-submenu-selected, .ant-menu-submenu-selected::after, .ant-menu-submenu-title{
+    background: $selected-color !important ;
+    color: $primary-color !important;
+    border-right-color: $primary-color !important;
+}

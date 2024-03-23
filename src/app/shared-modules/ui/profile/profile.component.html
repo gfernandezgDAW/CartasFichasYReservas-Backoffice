@@ -1,0 +1,21 @@
+<button class="profile-btn" 
+    nz-button 
+    nz-popover 
+    [nzPopoverContent]="logOutTemplate" 
+    nzPopoverPlacement="bottom" 
+    nzPopoverTrigger="click" 
+    (nzPopoverVisibleChange)="popoverStateChange($event)"
+    [(nzPopoverVisible)]="isVisible"
+    >
+    <div class="profile-btn__main" id="profile-btn-click-trigger">
+        <div class="profile-btn__main__text">{{email}}</div>
+        <img class="profile-btn__main__img" src="./../../../../assets/avatar.svg">
+    </div>
+</button>
+
+<ng-template #logOutTemplate >
+    <button nz-button class="logout-btn" (click)="logOff()">
+        <img class="logout-btn__icon" src="./../../../../assets/log-out-outline.svg">
+        <div>Cerrar sesión</div>
+    </button>
+</ng-template>
