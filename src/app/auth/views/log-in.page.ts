@@ -49,7 +49,6 @@ export class LogInPage {
           );
         },
         (err) => {
-          console.log(err);
           this.utilsService.displayToast(err.error.message, 'error');
         }
       );

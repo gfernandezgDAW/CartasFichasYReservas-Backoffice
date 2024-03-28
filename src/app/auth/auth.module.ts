@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../common/shared.module';
 
+import { AuthUtilsService } from './auth-utils.service';
 import { AuthService } from './auth.service';
 import { LogInPage } from './views/log-in.page';
 
@@ -13,7 +14,7 @@ import { LogInPage } from './views/log-in.page';
       { path: '', pathMatch: 'full', component: LogInPage },
     ]),
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthUtilsService],
   declarations: [LogInPage],
 })
 export class AuthModule {}

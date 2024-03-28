@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { UtilsService } from '../../../common/utils.service';
+
+import { AuthUtilsService } from '../../../auth/auth-utils.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +11,7 @@ import { UtilsService } from '../../../common/utils.service';
 export class ProfileComponent {
   email = '';
   isVisible = false;
-  constructor(private router: Router, private utilsService: UtilsService) {
+  constructor(private authUtilsService: AuthUtilsService) {
     const loggedAsStorage = localStorage.getItem('cfyrAdminLoggedAs');
     if (!loggedAsStorage) {
       return;
@@ -22,10 +22,7 @@ export class ProfileComponent {
 
   logOff() {
     this.isVisible = false;
-    localStorage.removeItem('cfyrAdminToken');
-    localStorage.removeItem('cfyrAdminLoggedAs');
-    this.router.navigate(['']);
-    this.utilsService.displayToast('Se cerro la sesión actual', 'info');
+    this.authUtilsService.logOff();
   }
 
   popoverStateChange(isVisible: boolean) {
