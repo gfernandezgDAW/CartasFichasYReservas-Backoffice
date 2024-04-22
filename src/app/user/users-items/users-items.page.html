@@ -1,1 +1,4 @@
-Usuarios
+<nz-card class="main-card" >
+   <app-breadcrumb [breadCrumbDataList]="[{title: 'Usuarios'}]"></app-breadcrumb>
+   <app-crud-table [crudEntityUrl]="'user'" [tableHeaders]="['Nombre de usuario','Email','Dni']" [objectProperties]="['username','email','dni']"></app-crud-table>
+</nz-card>

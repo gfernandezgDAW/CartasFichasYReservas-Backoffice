@@ -8,9 +8,15 @@ import { Router } from '@angular/router';
 })
 @Injectable()
 export class SidebarComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.homeTabIsActive();
+  }
 
   navigateTo(route: string) {
     this.router.navigate(['menu', route]);
+  }
+
+  homeTabIsActive() {
+    return this.router.url.endsWith('/home');
   }
 }

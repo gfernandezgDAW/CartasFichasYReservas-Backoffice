@@ -1,0 +1,15 @@
+<nz-upload
+    nzAccept='image/png, image/jpeg, image/jpg,image/svg+xml'
+    nzType="drag"
+    [nzShowUploadList]="false"
+    [nzMultiple]="false"
+    [nzCustomRequest]="handleUpload"
+    class="image-uploader"
+>
+    <img class="image-uploader__img" *ngIf="loadedImage" [src]="getCompleteImageUrl()">
+    <p class="image-uploader__icon" *ngIf="!loadedImage">
+        <span nz-icon nzType="inbox"></span>
+    </p>
+    <p class="image-uploader__description">{{getImageUploaderDescription()}}</p>
+    <button nz-button type="button" nzDanger *ngIf="loadedImage" nzType="default" class="image-uploader__del-btn" (click)="deleteImage($event)"><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+</nz-upload>

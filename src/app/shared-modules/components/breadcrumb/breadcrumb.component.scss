@@ -1,0 +1,9 @@
+@import "../../../../styles.scss";
+
+.ant-breadcrumb {
+    font-size: 17px;
+    margin-bottom: 20px;
+    font-weight: 400;
+    border-bottom: 1px solid $primary-color;
+    width: max-content;
+}

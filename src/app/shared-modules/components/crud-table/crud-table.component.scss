@@ -1,0 +1,37 @@
+@import "../../../../styles.scss";
+
+.crud-table-btns {
+    margin-bottom: 5px;
+
+    > button:not(:first-child){
+        margin-left: 10px;
+    }
+}
+
+tr:hover{
+    cursor: pointer;
+}
+
+.search-box {
+    background-color: white;
+    border-radius: 1px;
+    padding: 8px;
+
+    input {
+        width: 188px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    button {
+        width: 90px;
+
+        &:last-child{
+            margin-left: 8px;
+        }
+    }
+}
+
+.anticon-filter[ng-reflect-nz-theme="fill"]{
+    color: $primary-color;
+}

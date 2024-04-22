@@ -1,0 +1,59 @@
+<nz-card class="main-card">
+    <app-breadcrumb [breadCrumbDataList]="breadCrumbDataList"></app-breadcrumb>
+    <form nz-form [nzLayout]="'vertical'"  [formGroup]="boardGameForm"  (ngSubmit)="upsertBoardGame()">
+        <nz-form-item>
+            <nz-form-label nzFor="title" nzRequired>Título</nz-form-label>
+            <nz-form-control>
+                <input nz-input label="title" name="title" type="text" id="title" placeholder="Título" formControlName="title"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="introduction" nzRequired>Introducción</nz-form-label>
+            <nz-form-control>
+                <input nz-input label="introduction" name="introduction" type="text" id="introduction" placeholder="Introducción" formControlName="introduction"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="description" nzRequired>Descripción</nz-form-label>
+            <nz-form-control>
+                <textarea nz-input label="description" name="description" type="text" id="description" placeholder="Descripción de categoría" formControlName="description" [nzAutosize]="{ minRows: 3 }"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired>Nº mínimo de jugadores</nz-form-label>
+            <nz-form-control>
+                <nz-input-number [nzPrecision]="0" [nzStep]="1" [nzMin]="1" label="minPlayers" name="minPlayers" type="number" id="minPlayers" title="Nº de jugadores mínimo" formControlName="minPlayers" (focusout)="checkMinPlayersInputChanges()"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired>Nº máximo de jugadores</nz-form-label>
+            <nz-form-control>
+                <nz-input-number [nzPrecision]="0" [nzStep]="1" [nzMin]="1" label="maxPlayers" name="maxPlayers" type="number" id="maxPlayers" title="Nº de jugadores máximo (debe ser mayor o igual que el mínimo)" formControlName="maxPlayers"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired>Tiempo de juego medio (minutos)</nz-form-label>
+            <nz-form-control>
+                <nz-input-number [nzPrecision]="0" [nzStep]="1" [nzMin]="1" label="averageLength" name="averageLength" type="number" id="averageLength" title="Tiempo medio de duración de una partida en minutos" formControlName="averageLength"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired>Edad mínima requerida</nz-form-label>
+            <nz-form-control>
+                <nz-input-number [nzPrecision]="0" [nzStep]="1" [nzMin]="3" label="minAge" name="minAge" type="number" id="minAge" title="Clasificación por edad mínima" formControlName="minAge"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Portada</nz-form-label>
+            <app-image-uploader (uploadRes)="uploadPortadaRes($event)" [loadedImage]="loadedCoverArtImage"></app-image-uploader>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Categorías</nz-form-label>
+            <app-crud-table [crudEntityUrl]="'bg-category'" [tableHeaders]="['Título']" [objectProperties]="['title']" [hasSelectableEntries]="true" [selectedEntities]="getBoardGameFormCategories()" (selectedEntitiesOutput)="updatedCategoriesList($event)"></app-crud-table>
+        </nz-form-item>
+        <span>
+            <button nz-button [disabled]="!boardGameForm.valid" nzType="primary"><span nz-icon [nzType]="utilsService.crudEntityIsNew(id) ? 'plus' : 'sync'" nzTheme="outline"></span>{{utilsService.crudEntityIsNew(id) ? 'Crear' : 'Actualizar'}}</button>
+            <button nz-button type="button" nzDanger *ngIf="!utilsService.crudEntityIsNew(id)" nzType="default" class="extra-margin-left" (click)="deleteBoardGame()"><span nz-icon nzType="delete" nzTheme="outline"></span>{{'Eliminar'}}</button>
+        </span>
+    </form>
+</nz-card>

@@ -1,19 +1,30 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { IconDefinition } from '@ant-design/icons-angular';
 import {
   AppstoreOutline,
+  ClearOutline,
+  DeleteOutline,
+  FilterFill,
+  FilterOutline,
   HomeOutline,
+  InboxOutline,
   NotificationOutline,
   PlayCircleOutline,
+  PlusOutline,
   SettingOutline,
+  SyncOutline,
   UnorderedListOutline,
   UserOutline,
 } from '@ant-design/icons-angular/icons';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import {
@@ -21,6 +32,9 @@ import {
   NzNotificationService,
 } from 'ng-zorro-antd/notification';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 export const ANT_DESING_ICONS: IconDefinition[] = [
   HomeOutline,
@@ -30,6 +44,13 @@ export const ANT_DESING_ICONS: IconDefinition[] = [
   UnorderedListOutline,
   PlayCircleOutline,
   AppstoreOutline,
+  PlusOutline,
+  ClearOutline,
+  FilterOutline,
+  FilterFill,
+  DeleteOutline,
+  SyncOutline,
+  InboxOutline,
 ];
 
 export const NG_ZORRO_IMPORTED_COMPONENTS = [
@@ -42,13 +63,30 @@ export const NG_ZORRO_IMPORTED_COMPONENTS = [
   NzIconModule,
   NzMenuModule,
   NzPopoverModule,
+  NzTableModule,
+  NzDropDownModule,
+  NzBreadCrumbModule,
+  NzSwitchModule,
+  NzInputNumberModule,
+  NzUploadModule,
 ];
 
 @Injectable()
 export class UtilsService {
-  constructor(private nzNotificationService: NzNotificationService) {}
+  constructor(
+    private nzNotificationService: NzNotificationService,
+    private router: Router
+  ) {}
 
   async displayToast(msg: string, type: 'success' | 'error' | 'info') {
     this.nzNotificationService[type](msg, '');
+  }
+
+  crudEntityIsNew(id: string) {
+    return id && id === 'new';
+  }
+
+  navigateTo(routes: string[], replaceUrl = false) {
+    this.router.navigate(['menu'].concat(routes), { replaceUrl });
   }
 }

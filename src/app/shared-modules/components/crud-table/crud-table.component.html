@@ -1,0 +1,48 @@
+<div class="crud-table-btns">
+    <button nz-button nzType="primary" (click)="goToEntryDetail('new')" *ngIf="!hasSelectableEntries">
+        Nuevo
+        <span nz-icon nzType="plus" nzTheme="outline"></span>
+    </button>
+    <button nz-button nzType="default" type="button" (click)="resetAllFilters()">
+        Limpiar filtros
+        <span nz-icon nzType="clear" nzTheme="outline"></span>
+    </button>
+</div>
+<div>
+    <nz-table [nzData]="tableEntries">
+        <thead>
+            <tr>
+                <th *ngIf="hasSelectableEntries">
+                </th>
+                <th *ngFor="let tableHeader of tableHeaders; let i = index" [nzSortFn]="true" (nzSortOrderChange)="filterColumnFn($event,objectProperties[i])" nzCustomFilter>
+                    {{tableHeader}}
+                    <nz-filter-trigger [nzDropdownMenu]="menu">
+                        <span nz-icon nzType="filter" [nzTheme]="filterThemeType(i)"></span>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <div>
+                              <div class="search-box">
+                                <input type="text" nz-input placeholder="Texto a buscar" [(ngModel)]="searchFilterText" />
+                                <button nz-button nzSize="small" nzType="default" (click)="filterEntriesBySearchTxtParam(i)">
+                                    Buscar
+                                    <span nz-icon nzType="search"></span>
+                                </button>
+                                <button nz-button nzSize="small" (click)="resetAllFilters()">Resetear</button>
+                              </div>
+                            </div>
+                        </nz-dropdown-menu>
+                    </nz-filter-trigger>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let entryData of tableEntries" (click)="tableRowClick(entryData)">
+                <td *ngIf="hasSelectableEntries"
+                    [nzChecked]="getTableRowEntryById(entryData['id']) !== undefined"
+                ></td>
+                <td *ngFor="let property of objectProperties">
+                    {{entryData[property]}}
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

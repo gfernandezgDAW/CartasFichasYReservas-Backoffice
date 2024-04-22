@@ -1,6 +1,6 @@
 <nz-sider>
   <ul nz-menu nzMode="inline">
-    <li nz-menu-item (click)="navigateTo('home')">
+    <li nz-menu-item (click)="navigateTo('home')" [nzSelected]="homeTabIsActive()">
       <span nz-icon nzType="home"></span>Inicio
     </li>
     <li nz-menu-item (click)="navigateTo('users')">

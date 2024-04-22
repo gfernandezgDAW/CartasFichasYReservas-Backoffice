@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { CrudService } from '../shared-modules/crud/crud.service';
 
-import { User } from './classes/user.class';
+import { BoardGame } from './classes/board-game.class';
 
-export const userCrudUrl = `${environment.apiUrl}user`;
+export const boardGameCrudUrl = `${environment.apiUrl}board-game`;
 @Injectable()
-export class UsersService extends CrudService<User> {
+export class BoardGameService extends CrudService<BoardGame> {
   constructor(http: HttpClient) {
-    super(http, userCrudUrl);
+    super(http, boardGameCrudUrl);
   }
 }

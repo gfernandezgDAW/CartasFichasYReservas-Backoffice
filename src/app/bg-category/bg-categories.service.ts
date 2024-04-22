@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { CrudService } from '../shared-modules/crud/crud.service';
 
-import { User } from './classes/user.class';
+import { BGCategory } from './classes/bg-category.class';
 
-export const userCrudUrl = `${environment.apiUrl}user`;
+export const bgCategoryCrudUrl = `${environment.apiUrl}bg-category`;
 @Injectable()
-export class UsersService extends CrudService<User> {
+export class BGCategoriesService extends CrudService<BGCategory> {
   constructor(http: HttpClient) {
-    super(http, userCrudUrl);
+    super(http, bgCategoryCrudUrl);
   }
 }

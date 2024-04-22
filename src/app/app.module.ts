@@ -1,8 +1,11 @@
+import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import es from '@angular/common/locales/es';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { NZ_I18N, es_ES } from 'ng-zorro-antd/i18n';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +14,7 @@ import { BGCategoriesModule } from './bg-category/bg-categories.module';
 import { BoardGamesModule } from './board-game/board-games.module';
 import { BookingsModule } from './booking/booking.module';
 import { AuthInterceptor } from './common/interceptors/auth.interceptor';
+import { GenericNetworkErrorInterceptor } from './common/interceptors/error.interceptor';
 import { JwtInterceptor } from './common/interceptors/jwt.interceptor';
 import { SharedModule } from './common/shared.module';
 import {
@@ -22,6 +26,7 @@ import { HomeModule } from './home/home.module';
 import { UiModule } from './shared-modules/ui/ui.module';
 import { SuggestionsModule } from './suggestion/suggestions.module';
 import { UsersModule } from './user/users.module';
+registerLocaleData(es);
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,6 +51,12 @@ import { UsersModule } from './user/users.module';
     IsAuthenticatedGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GenericNetworkErrorInterceptor,
+      multi: true,
+    },
+    { provide: NZ_I18N, useValue: es_ES },
   ],
   bootstrap: [AppComponent],
 })

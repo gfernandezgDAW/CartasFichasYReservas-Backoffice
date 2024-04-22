@@ -1,0 +1,39 @@
+<nz-card class="main-card">
+    <app-breadcrumb [breadCrumbDataList]="breadCrumbDataList"></app-breadcrumb>
+    <form nz-form [nzLayout]="'vertical'"  [formGroup]="userForm"  (ngSubmit)="upsertUser()">
+        <nz-form-item>
+            <nz-form-label nzFor="username" nzRequired>Nombre de usuario</nz-form-label>
+            <nz-form-control>
+                <input nz-input label="username" name="username" type="text" id="username" placeholder="ejemplo@gmail.com" formControlName="username"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="dni" nzRequired>DNI/NIF</nz-form-label>
+            <nz-form-control>
+                <input nz-input label="Correo" name="dni" type="text" id="dni" placeholder="Nombre Apellido" formControlName="dni"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="email" nzRequired>Correo</nz-form-label>
+            <nz-form-control>
+                <input nz-input label="Correo" name="email" type="email" id="email" placeholder="ejemplo@gmail.com" formControlName="email"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="password" [nzRequired]="utilsService.crudEntityIsNew(id)">Contraseña</nz-form-label>
+            <nz-form-control>
+                <input nz-input label="Contraseña" name="password" type="password" id="password" placeholder="***" formControlName="password"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="isAdmin">Es Administrador</nz-form-label>
+            <nz-form-control>
+                <nz-switch formControlName="isAdmin"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <span>
+            <button nz-button [disabled]="!userForm.valid" nzType="primary"><span nz-icon [nzType]="utilsService.crudEntityIsNew(id) ? 'plus' : 'sync'" nzTheme="outline"></span>{{utilsService.crudEntityIsNew(id) ? 'Crear' : 'Actualizar'}}</button>
+            <button nz-button type="button" nzDanger *ngIf="!utilsService.crudEntityIsNew(id)" nzType="default" class="extra-margin-left" (click)="deleteUser()"><span nz-icon nzType="delete" nzTheme="outline"></span>{{'Eliminar'}}</button>
+        </span>
+    </form>
+</nz-card>

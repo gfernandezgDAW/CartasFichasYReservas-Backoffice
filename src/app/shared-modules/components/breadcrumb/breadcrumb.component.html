@@ -1,0 +1,6 @@
+<nz-breadcrumb nzSeparator="/">
+    <nz-breadcrumb-item *ngFor="let breadCrumData of breadCrumbDataList">
+      <a *ngIf="breadCrumData.routes" (click)="navigateTo(breadCrumData.routes)">{{breadCrumData.title}}</a>
+      <span *ngIf="!breadCrumData.routes">{{breadCrumData.title}}</span>
+    </nz-breadcrumb-item>
+</nz-breadcrumb>

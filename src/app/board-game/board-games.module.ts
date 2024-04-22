@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../common/shared.module';
 
+import { BoardGameItemPage } from './board-game-item/board-game-item.page';
+import { BoardGameService } from './board-game.service';
 import { BoardGamesItemsPage } from './board-games-items/board-games-items.page';
 
 @NgModule({
@@ -13,8 +15,13 @@ import { BoardGamesItemsPage } from './board-games-items/board-games-items.page'
         path: '',
         component: BoardGamesItemsPage,
       },
+      {
+        path: ':id',
+        component: BoardGameItemPage,
+      },
     ]),
   ],
-  declarations: [BoardGamesItemsPage],
+  providers: [BoardGameService],
+  declarations: [BoardGamesItemsPage, BoardGameItemPage],
 })
 export class BoardGamesModule {}
