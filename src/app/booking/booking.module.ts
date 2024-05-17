@@ -3,7 +3,9 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../common/shared.module';
 
-import { BookingItemsPage } from './bookings-items/bookings-items.page';
+import { BookingItemPage } from './booking-item/booking-item.page';
+import { BookingService } from './booking.service';
+import { BookingsItemsPage } from './bookings-items/bookings-items.page';
 
 @NgModule({
   imports: [
@@ -11,10 +13,15 @@ import { BookingItemsPage } from './bookings-items/bookings-items.page';
     RouterModule.forChild([
       {
         path: '',
-        component: BookingItemsPage,
+        component: BookingsItemsPage,
+      },
+      {
+        path: ':id',
+        component: BookingItemPage,
       },
     ]),
   ],
-  declarations: [BookingItemsPage],
+  providers: [BookingService],
+  declarations: [BookingsItemsPage, BookingItemPage],
 })
 export class BookingsModule {}

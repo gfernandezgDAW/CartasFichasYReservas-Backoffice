@@ -11,7 +11,7 @@ import { ImageUploaderComponent } from '../shared-modules/components/image-uploa
 import {
   ANT_DESING_ICONS,
   NG_ZORRO_IMPORTED_COMPONENTS,
-} from './utils.service';
+} from './services/utils.service';
 
 @NgModule({
   declarations: [

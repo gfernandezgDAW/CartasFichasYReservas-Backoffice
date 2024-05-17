@@ -1,6 +1,6 @@
 import { Component, Injectable, Input } from '@angular/core';
 
-import { UtilsService } from '../../../common/utils.service';
+import { UtilsService } from '../../../common/services/utils.service';
 import { BreadcrumbDataDto } from './dtos/breadcrumb-data.dto';
 
 @Component({

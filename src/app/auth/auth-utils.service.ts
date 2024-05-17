@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UtilsService } from '../common/utils.service';
+import { UtilsService } from '../common/services/utils.service';
 
 @Injectable()
 export class AuthUtilsService {
@@ -10,7 +10,7 @@ export class AuthUtilsService {
   logOff(displayToast = true) {
     localStorage.removeItem('cfyrAdminToken');
     localStorage.removeItem('cfyrAdminLoggedAs');
-    this.router.navigate(['']);
+    this.router.navigate([''], { replaceUrl: true });
     if (!displayToast) {
       return;
     }

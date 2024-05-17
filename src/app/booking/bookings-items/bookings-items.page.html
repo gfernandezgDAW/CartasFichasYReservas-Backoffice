@@ -1,0 +1,6 @@
+<nz-card class="main-card" >
+    <app-breadcrumb [breadCrumbDataList]="[{title: 'Reservas'}]"></app-breadcrumb>
+    <app-crud-table [crudEntityUrl]="'booking'" [tableHeaders]="['Fecha Inicio','Hora Fin', 'Estado','Usuario','Juego','Sitio','Nº Participantes']" [objectProperties]="['startOf','endOf','status','user','boardGame','bookableSpace','participants']"
+    [additionalCrudTableParametersByProperty]="additionalCrudTableParametersByPropertyBookings"
+    ></app-crud-table>
+ </nz-card>

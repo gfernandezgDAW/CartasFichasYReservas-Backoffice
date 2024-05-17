@@ -44,6 +44,12 @@
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
+            <nz-form-label nzRequired>Unidades disponibles</nz-form-label>
+            <nz-form-control>
+                <nz-input-number [nzPrecision]="0" [nzStep]="1" [nzMin]="0" label="unitsAvaliable" name="unitsAvaliable" type="number" id="unitsAvaliable" title="Unidades disponibles" formControlName="unitsAvaliable"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
             <nz-form-label>Portada</nz-form-label>
             <app-image-uploader (uploadRes)="uploadPortadaRes($event)" [loadedImage]="loadedCoverArtImage"></app-image-uploader>
         </nz-form-item>

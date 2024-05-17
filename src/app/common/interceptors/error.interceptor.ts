@@ -7,7 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 
-import { UtilsService } from '../utils.service';
+import { UtilsService } from '../services/utils.service';
 import { AUTH_ERROR_CODES } from './auth.interceptor';
 
 @Injectable()

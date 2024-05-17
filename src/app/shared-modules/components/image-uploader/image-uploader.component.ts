@@ -9,7 +9,7 @@ import {
 import { first } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
-import { UtilsService } from '../../../common/utils.service';
+import { UtilsService } from '../../../common/services/utils.service';
 
 import { UploadedFileResDto } from './dtos/uploadedFileRes.dto';
 

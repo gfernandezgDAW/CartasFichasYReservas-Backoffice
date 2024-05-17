@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export class CrudService<T> {
-  constructor(private http: HttpClient, private url: string) {}
+  constructor(protected http: HttpClient, private url: string) {}
 
   getAll() {
     return this.http.get(`${this.url}/all`) as Observable<T[]>;

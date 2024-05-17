@@ -1,6 +1,7 @@
 import { BGCategory } from '../../bg-category/classes/bg-category.class';
 
 export class BoardGame {
+  id?: string;
   title: string;
   introduction: string;
   description: string;
@@ -9,9 +10,11 @@ export class BoardGame {
   maxPlayers: number;
   averageLength: number;
   minAge: number;
+  unitsAvaliable: number;
   categories?: BGCategory[];
 
   constructor() {
+    this.id = undefined;
     this.title = '';
     this.introduction = '';
     this.description = '';
@@ -20,6 +23,7 @@ export class BoardGame {
     this.maxPlayers = 1;
     this.averageLength = 1;
     this.minAge = 3;
+    this.unitsAvaliable = 1;
     this.categories = [];
   }
 }

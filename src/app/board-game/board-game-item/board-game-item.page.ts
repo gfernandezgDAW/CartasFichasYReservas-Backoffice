@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs';
 
 import { BGCategory } from '../../bg-category/classes/bg-category.class';
-import { UtilsService } from '../../common/utils.service';
+import { UtilsService } from '../../common/services/utils.service';
 import { BreadcrumbDataDto } from '../../shared-modules/components/breadcrumb/dtos/breadcrumb-data.dto';
 import { UploadedFileResDto } from '../../shared-modules/components/image-uploader/dtos/uploadedFileRes.dto';
 import { BoardGameService } from '../board-game.service';
@@ -26,6 +26,7 @@ export class BoardGameItemPage implements OnInit {
     maxPlayers: [1, [Validators.required, Validators.min(1)]],
     averageLength: [1, [Validators.required, Validators.min(1)]],
     minAge: [3, [Validators.required, Validators.min(3)]],
+    unitsAvaliable: [0, [Validators.required, Validators.min(0)]],
     coverArtImage: [''],
     categories: [this.fromBuilder.array([])],
   });

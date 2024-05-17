@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs';
 
-import { UtilsService } from '../../common/utils.service';
+import { UtilsService } from '../../common/services/utils.service';
 import { BreadcrumbDataDto } from '../../shared-modules/components/breadcrumb/dtos/breadcrumb-data.dto';
 import { User } from '../classes/user.class';
 import { UsersService } from '../users.service';

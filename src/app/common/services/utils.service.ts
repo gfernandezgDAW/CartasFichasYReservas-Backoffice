@@ -20,6 +20,7 @@ import {
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -32,8 +33,10 @@ import {
   NzNotificationService,
 } from 'ng-zorro-antd/notification';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 export const ANT_DESING_ICONS: IconDefinition[] = [
@@ -69,6 +72,9 @@ export const NG_ZORRO_IMPORTED_COMPONENTS = [
   NzSwitchModule,
   NzInputNumberModule,
   NzUploadModule,
+  NzDatePickerModule,
+  NzTimePickerModule,
+  NzSelectModule,
 ];
 
 @Injectable()

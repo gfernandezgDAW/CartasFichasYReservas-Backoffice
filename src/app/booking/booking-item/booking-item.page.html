@@ -1,0 +1,51 @@
+<nz-card class="main-card">
+    <app-breadcrumb [breadCrumbDataList]="breadCrumbDataList"></app-breadcrumb>
+    <form nz-form [nzLayout]="'vertical'"  [formGroup]="bookingForm"  (ngSubmit)="upsertBooking()">
+        <nz-form-item>
+            <nz-form-label nzRequired>Fecha</nz-form-label>
+            <nz-form-control>
+                <nz-date-picker ngDefaultControl [nzAllowClear]="false" formControlName="date" (nzOnOpenChange)="datePickerCheckOnClose($event)"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired>Hora inicio</nz-form-label>
+            <nz-form-control>
+                <nz-time-picker ngDefaultControl [nzNowText]="' '" (nzOpenChange)="startOfTimePickerCheckOnClose($event)" [nzAllowEmpty]="false" [nzMinuteStep]="5" [nzDisabledHours]="disableHoursTimePicker" formControlName="startOf" nzFormat="HH:mm" [nzHideDisabledOptions]="true" (ngModelChange)="getBookingSelectablesData()"></nz-time-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired>Hora fin</nz-form-label>
+            <nz-form-control>
+                <nz-time-picker ngDefaultControl [nzNowText]="' '" (nzOpenChange)="endOfTimePickerCheckOnClose($event)" [nzAllowEmpty]="false" [nzMinuteStep]="5" [nzDisabledHours]="disableHoursTimePicker" formControlName="endOf" nzFormat="HH:mm" [nzHideDisabledOptions]="true" (ngModelChange)="getBookingSelectablesData()"></nz-time-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired>Nº de participantes</nz-form-label>
+            <nz-form-control>
+                <nz-input-number [nzPrecision]="0" [nzStep]="1" [nzMin]="1" [nzMax]="8" label="minPlayers" name="participants" type="number" id="participants" title="Nº de participantes" formControlName="participants" (ngModelChange)="getAvailableBookingSpaceBetweenDates()"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Usuario</nz-form-label>
+            <app-crud-table [crudEntityUrl]="'user'" [tableHeaders]="['Nombre de usuario','Email','Dni']" [objectProperties]="['username','email','dni']" [hasSelectableEntries]="true" [isSingleSelection]="true" [selectedEntities]="getBookingFormUser()" (selectedEntitiesOutput)="updatedUserList($event)"></app-crud-table>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Sitio (La disponibilidad depende del horario, la fecha y el nº de participantes)</nz-form-label>
+            <app-crud-table [localEntities]="availableBookableSpaces" [tableHeaders]="['Nº de sitio','Capacidad']" [objectProperties]="['spaceNumber','capacity']" [hasSelectableEntries]="true" [isSingleSelection]="true" [selectedEntities]="getBookingFormBookableSpace()" (selectedEntitiesOutput)="updatedBookableSpacesList($event)"></app-crud-table>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Juego (La disponibilidad depende del horario y la fecha)</nz-form-label>
+            <app-crud-table [localEntities]="availableBoardGames" [tableHeaders]="['Título']" [objectProperties]="['title']" [hasSelectableEntries]="true" [isSingleSelection]="true" [selectedEntities]="getBookingFormBoardGame()" (selectedEntitiesOutput)="updatedBoardGamesList($event)"></app-crud-table>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Estado</nz-form-label>
+            <nz-select formControlName="status">
+                <nz-option *ngFor="let bookingStatus of bookingStatusList" [nzValue]="bookingStatus" [nzLabel]="bookingStatus"></nz-option>
+            </nz-select>
+        </nz-form-item>
+        <span>
+            <button nz-button [disabled]="!bookingForm.valid" nzType="primary"><span nz-icon [nzType]="utilsService.crudEntityIsNew(id) ? 'plus' : 'sync'" nzTheme="outline"></span>{{utilsService.crudEntityIsNew(id) ? 'Crear' : 'Actualizar'}}</button>
+            <button nz-button type="button" nzDanger *ngIf="!utilsService.crudEntityIsNew(id)" nzType="default" class="extra-margin-left" (click)="deleteBooking()"><span nz-icon nzType="delete" nzTheme="outline"></span>{{'Eliminar'}}</button>
+        </span>
+    </form>
+</nz-card>

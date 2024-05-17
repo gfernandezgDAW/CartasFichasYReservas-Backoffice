@@ -8,10 +8,19 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { first } from 'rxjs';
 
-import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { DateUtilsService } from '../../../common/services/date-utils.service';
+
+export type AdditionalCrudTableParametersByProperty = {
+  [property: string]: {
+    subParameter?: string;
+    dataType?: 'date' | 'any';
+    formatTo?: string;
+  };
+};
 
 @Component({
   selector: 'app-crud-table',
@@ -20,25 +29,38 @@ import { environment } from '../../../../environments/environment';
 })
 @Injectable()
 export class CrudTableComponent implements OnChanges {
-  @Input() crudEntityUrl: string;
+  @Input() crudEntityUrl: string; // Url de la que obtener las entidades
+  @Input() localEntities: any[]; // Listado de entidades locales
   @Input() tableHeaders: string[];
   @Input() objectProperties: string[];
   @Input() hasSelectableEntries = false;
+  @Input() isSingleSelection = false;
   @Input() selectedEntities: any[] = [];
+  @Input()
+  additionalCrudTableParametersByProperty: AdditionalCrudTableParametersByProperty;
   @Output() selectedEntitiesOutput = new EventEmitter<any[]>();
   tableEntries: any[];
   unfilteredTableEntries: any[];
   searchFilterText = '';
   indexColumnFiltered: number | undefined;
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dateUtilsService: DateUtilsService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['crudEntityUrl'] && changes['crudEntityUrl'].currentValue) {
-      this.getAllValues();
+      this.getAllValuesFromCrudUrl();
+    }
+
+    if (changes['localEntities'] && changes['localEntities'].currentValue) {
+      this.tableEntries = this.localEntities;
+      this.unfilteredTableEntries = [...this.tableEntries];
     }
   }
 
-  getAllValues() {
+  getAllValuesFromCrudUrl() {
     if (!this.crudEntityUrl) {
       return;
     }
@@ -74,6 +96,10 @@ export class CrudTableComponent implements OnChanges {
       (entry) => entry.id === entryData.id
     );
 
+    if (this.isSingleSelection) {
+      this.selectedEntities = [];
+    }
+
     if (entryIndex === -1) {
       this.selectedEntities.push(entryData);
     } else {
@@ -88,13 +114,21 @@ export class CrudTableComponent implements OnChanges {
   }
 
   filterColumnFn(orderDirection: string | null, fieldToCompare: string) {
+    if (!this.tableEntries) {
+      return;
+    }
+
     if (!orderDirection) {
       this.resetAllFilters();
       return;
     }
 
     let updatedEntries = this.tableEntries.sort((entryA, entryB) => {
-      return entryA[fieldToCompare].localeCompare([entryB[fieldToCompare]]);
+      return this.getEntryDataByProperty(entryA, fieldToCompare)
+        .toString()
+        .localeCompare(
+          this.getEntryDataByProperty(entryB, fieldToCompare).toString()
+        );
     });
 
     if (orderDirection === 'descend') {
@@ -105,12 +139,16 @@ export class CrudTableComponent implements OnChanges {
   }
 
   filterEntriesBySearchTxtParam(indexOfColumnToFilter: number) {
+    if (!this.tableEntries) {
+      return;
+    }
+
     const fieldToFilter = this.objectProperties[indexOfColumnToFilter];
     const trimmedSearchFilterText = this.searchFilterText
       .trim()
       .toLocaleLowerCase();
     this.tableEntries = this.tableEntries.filter((entry) => {
-      return entry[fieldToFilter]
+      return this.getEntryDataByProperty(entry, fieldToFilter)
         .toString()
         .trim()
         .toLocaleLowerCase()
@@ -120,6 +158,10 @@ export class CrudTableComponent implements OnChanges {
   }
 
   resetAllFilters() {
+    if (!this.tableEntries) {
+      return;
+    }
+
     this.searchFilterText = '';
     this.indexColumnFiltered = undefined;
     this.tableEntries = [...this.unfilteredTableEntries];
@@ -141,5 +183,32 @@ export class CrudTableComponent implements OnChanges {
     for (const icon of iconList) {
       icon.classList.remove('active');
     }
+  }
+
+  getEntryDataByProperty(entryData: any, property: string) {
+    let data = entryData[property];
+
+    if (
+      !this.additionalCrudTableParametersByProperty ||
+      !this.additionalCrudTableParametersByProperty[property]
+    ) {
+      return data;
+    }
+
+    const additionalParams =
+      this.additionalCrudTableParametersByProperty[property];
+    if (additionalParams.subParameter) {
+      data = data[additionalParams.subParameter];
+    }
+
+    if (additionalParams.dataType === 'date') {
+      data = this.dateUtilsService.daysJsUtc(data);
+
+      if (additionalParams.formatTo) {
+        data = data.format(additionalParams.formatTo);
+      }
+    }
+
+    return data;
   }
 }

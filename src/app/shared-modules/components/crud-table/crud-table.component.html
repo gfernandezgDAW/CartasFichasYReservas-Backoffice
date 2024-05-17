@@ -40,7 +40,7 @@
                     [nzChecked]="getTableRowEntryById(entryData['id']) !== undefined"
                 ></td>
                 <td *ngFor="let property of objectProperties">
-                    {{entryData[property]}}
+                    {{getEntryDataByProperty(entryData, property)}}
                 </td>
             </tr>
         </tbody>
