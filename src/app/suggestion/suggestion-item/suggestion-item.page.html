@@ -1,0 +1,30 @@
+<nz-card class="main-card">
+    <app-breadcrumb [breadCrumbDataList]="breadCrumbDataList"></app-breadcrumb>
+    <div  *ngIf="!suggestion">
+        No se encontraron los datos de la sugerencia
+    </div>
+    <form nz-form [nzLayout]="'vertical'"  [formGroup]="suggestionForm"  (ngSubmit)="updateSuggestion()" *ngIf="suggestion">
+        <nz-form-item>
+            <nz-form-label nzFor="title" nzRequired>Título (solo lectura)</nz-form-label>
+            <nz-form-control>
+                <input nz-input label="title" name="title" type="text" id="title" placeholder="Título" formControlName="title"  [readonly]="true"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="description" nzRequired>Descripción (solo lectura)</nz-form-label>
+            <nz-form-control>
+                <textarea nz-input label="description" name="description" type="text" id="description" placeholder="Descripción de sugerencia" formControlName="description" [nzAutosize]="{ minRows: 1 }"  [readonly]="true"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Estado</nz-form-label>
+            <nz-select formControlName="status">
+                <nz-option *ngFor="let suggestionStatus of suggestionStatusList" [nzValue]="suggestionStatus" [nzLabel]="suggestionStatus"></nz-option>
+            </nz-select>
+        </nz-form-item>
+        <span>
+            <button nz-button [disabled]="!suggestionForm.valid" nzType="primary"><span nz-icon [nzType]="'sync'" nzTheme="outline"></span>Actualizar</button>
+            <button nz-button type="button" nzDanger nzType="default" class="extra-margin-left" (click)="deleteSuggestion()"><span nz-icon nzType="delete" nzTheme="outline"></span>{{'Eliminar'}}</button>
+        </span>
+    </form>
+</nz-card>

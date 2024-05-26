@@ -3,7 +3,9 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../common/shared.module';
 
+import { SuggestionItemPage } from './suggestion-item/suggestion-item.page';
 import { SuggestionsItemsPage } from './suggestions-items/suggestions-items.page';
+import { SuggestionService } from './suggestions.service';
 
 @NgModule({
   imports: [
@@ -13,8 +15,13 @@ import { SuggestionsItemsPage } from './suggestions-items/suggestions-items.page
         path: '',
         component: SuggestionsItemsPage,
       },
+      {
+        path: ':id',
+        component: SuggestionItemPage,
+      },
     ]),
   ],
-  declarations: [SuggestionsItemsPage],
+  providers: [SuggestionService],
+  declarations: [SuggestionsItemsPage, SuggestionItemPage],
 })
 export class SuggestionsModule {}

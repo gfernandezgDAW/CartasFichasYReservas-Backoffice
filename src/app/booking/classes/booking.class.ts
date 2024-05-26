@@ -13,6 +13,7 @@ export class Booking {
   boardGame?: BoardGame;
   user?: User;
   status: 'Pendiente' | 'Activa' | 'Finalizada' | 'Cancelada';
+
   constructor() {
     this.startOf = dayjs().set('h', 8).set('m', 0).set('s', 0).toDate();
     this.endOf = dayjs().set('h', 8).set('m', 30).set('s', 0).toDate();

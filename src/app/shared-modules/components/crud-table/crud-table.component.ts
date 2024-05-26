@@ -38,11 +38,14 @@ export class CrudTableComponent implements OnChanges {
   @Input() selectedEntities: any[] = [];
   @Input()
   additionalCrudTableParametersByProperty: AdditionalCrudTableParametersByProperty;
+  @Input() disableNewButton = false;
   @Output() selectedEntitiesOutput = new EventEmitter<any[]>();
   tableEntries: any[];
   unfilteredTableEntries: any[];
-  searchFilterText = '';
-  indexColumnFiltered: number | undefined;
+  paginatedEntries: any[];
+  searchFilterTextByColumn: { textFilterValue: string; isActive: boolean }[];
+  pageIndex = 1;
+  pageSize = 10;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -50,14 +53,29 @@ export class CrudTableComponent implements OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['crudEntityUrl'] && changes['crudEntityUrl'].currentValue) {
-      this.getAllValuesFromCrudUrl();
+    if (changes['tableHeaders'] && changes['tableHeaders'].currentValue) {
+      this.fillSearchFilterTextByColumnByTableHeadersLength();
     }
 
     if (changes['localEntities'] && changes['localEntities'].currentValue) {
       this.tableEntries = this.localEntities;
       this.unfilteredTableEntries = [...this.tableEntries];
     }
+
+    if (changes['crudEntityUrl'] && changes['crudEntityUrl'].currentValue) {
+      this.getAllValuesFromCrudUrl();
+    }
+  }
+
+  fillSearchFilterTextByColumnByTableHeadersLength() {
+    const emptyFilter = {
+      textFilterValue: '',
+      isActive: false,
+    };
+
+    this.searchFilterTextByColumn = Array(this.tableHeaders.length).fill({
+      ...emptyFilter,
+    });
   }
 
   getAllValuesFromCrudUrl() {
@@ -144,7 +162,9 @@ export class CrudTableComponent implements OnChanges {
     }
 
     const fieldToFilter = this.objectProperties[indexOfColumnToFilter];
-    const trimmedSearchFilterText = this.searchFilterText
+    const trimmedSearchFilterText = this.searchFilterTextByColumn[
+      indexOfColumnToFilter
+    ].textFilterValue
       .trim()
       .toLocaleLowerCase();
     this.tableEntries = this.tableEntries.filter((entry) => {
@@ -154,7 +174,15 @@ export class CrudTableComponent implements OnChanges {
         .toLocaleLowerCase()
         .includes(trimmedSearchFilterText);
     });
-    this.indexColumnFiltered = indexOfColumnToFilter;
+
+    this.searchFilterTextByColumn[indexOfColumnToFilter].isActive = true;
+  }
+
+  updateSearchFilterTextByColumn(text: string, index: number) {
+    this.searchFilterTextByColumn[index] = {
+      ...this.searchFilterTextByColumn[index],
+      textFilterValue: text,
+    };
   }
 
   resetAllFilters() {
@@ -162,15 +190,16 @@ export class CrudTableComponent implements OnChanges {
       return;
     }
 
-    this.searchFilterText = '';
-    this.indexColumnFiltered = undefined;
+    this.fillSearchFilterTextByColumnByTableHeadersLength();
     this.tableEntries = [...this.unfilteredTableEntries];
     this.removeActiveSortIcons();
   }
 
   filterThemeType(headerIndex: number) {
-    return this.indexColumnFiltered !== undefined &&
-      this.indexColumnFiltered === headerIndex
+    const searchFilterTextByColumnByIndex =
+      this.searchFilterTextByColumn[headerIndex];
+    return searchFilterTextByColumnByIndex.textFilterValue.length &&
+      searchFilterTextByColumnByIndex.isActive
       ? 'fill'
       : 'outline';
   }
@@ -210,5 +239,9 @@ export class CrudTableComponent implements OnChanges {
     }
 
     return data;
+  }
+
+  asignPaginatedEntries(entries: readonly any[]) {
+    this.paginatedEntries = entries as any[];
   }
 }

@@ -20,7 +20,7 @@ export class BoardGameItemPage implements OnInit {
   loadedCoverArtImage: string;
   boardGameForm = this.fromBuilder.group({
     title: ['', [Validators.required]],
-    introduction: ['', [Validators.required]],
+    introduction: ['', [Validators.required, Validators.maxLength(200)]],
     description: ['', [Validators.required]],
     minPlayers: [1, [Validators.required, Validators.min(1)]],
     maxPlayers: [1, [Validators.required, Validators.min(1)]],
@@ -120,14 +120,17 @@ export class BoardGameItemPage implements OnInit {
     if (
       maxPlayersAbstractControl &&
       maxPlayersAbstractControl.value !== null &&
-      minPlayersValue &&
-      maxPlayersAbstractControl.value < minPlayersValue
+      minPlayersValue
     ) {
-      maxPlayersAbstractControl.patchValue(minPlayersValue);
       maxPlayersAbstractControl.setValidators([
         Validators.required,
         Validators.min(minPlayersValue),
       ]);
+
+      if (maxPlayersAbstractControl.value < minPlayersValue) {
+        maxPlayersAbstractControl.patchValue(minPlayersValue);
+      }
+      maxPlayersAbstractControl.updateValueAndValidity();
     }
   }
 

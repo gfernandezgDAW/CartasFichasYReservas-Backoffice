@@ -1,0 +1,6 @@
+<nz-card class="main-card" >
+    <app-breadcrumb [breadCrumbDataList]="[{title: 'Sugerencias'}]"></app-breadcrumb>
+    <app-crud-table [crudEntityUrl]="'suggestion'" [tableHeaders]="['Fecha de creación','Estado','Usuario','Título']" [objectProperties]="['createdAt','status','user','title']"
+    [additionalCrudTableParametersByProperty]="additionalCrudTableParametersByPropertySuggestions" [disableNewButton]="true"
+    ></app-crud-table>
+</nz-card>

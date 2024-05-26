@@ -1,5 +1,5 @@
 <div class="crud-table-btns">
-    <button nz-button nzType="primary" (click)="goToEntryDetail('new')" *ngIf="!hasSelectableEntries">
+    <button nz-button nzType="primary" (click)="goToEntryDetail('new')" *ngIf="!hasSelectableEntries && !disableNewButton">
         Nuevo
         <span nz-icon nzType="plus" nzTheme="outline"></span>
     </button>
@@ -9,19 +9,26 @@
     </button>
 </div>
 <div>
-    <nz-table [nzData]="tableEntries">
+    <nz-table 
+    [nzData]="tableEntries" 
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+    nzShowPagination
+    nzShowSizeChanger
+    (nzCurrentPageDataChange)="asignPaginatedEntries($event)"
+    >
         <thead>
             <tr>
                 <th *ngIf="hasSelectableEntries">
                 </th>
                 <th *ngFor="let tableHeader of tableHeaders; let i = index" [nzSortFn]="true" (nzSortOrderChange)="filterColumnFn($event,objectProperties[i])" nzCustomFilter>
                     {{tableHeader}}
-                    <nz-filter-trigger [nzDropdownMenu]="menu">
+                    <nz-filter-trigger [nzDropdownMenu]="menu" *ngIf="searchFilterTextByColumn[i] !== undefined">
                         <span nz-icon nzType="filter" [nzTheme]="filterThemeType(i)"></span>
                         <nz-dropdown-menu #menu="nzDropdownMenu">
                             <div>
                               <div class="search-box">
-                                <input type="text" nz-input placeholder="Texto a buscar" [(ngModel)]="searchFilterText" />
+                                <input type="text" nz-input placeholder="Texto a buscar" [ngModel]="searchFilterTextByColumn[i].textFilterValue" (ngModelChange)="updateSearchFilterTextByColumn($event,i)" />
                                 <button nz-button nzSize="small" nzType="default" (click)="filterEntriesBySearchTxtParam(i)">
                                     Buscar
                                     <span nz-icon nzType="search"></span>
@@ -35,7 +42,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let entryData of tableEntries" (click)="tableRowClick(entryData)">
+            <tr *ngFor="let entryData of paginatedEntries" (click)="tableRowClick(entryData)">
                 <td *ngIf="hasSelectableEntries"
                     [nzChecked]="getTableRowEntryById(entryData['id']) !== undefined"
                 ></td>

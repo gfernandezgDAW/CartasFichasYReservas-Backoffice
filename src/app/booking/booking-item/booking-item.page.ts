@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import dayjs from 'dayjs';
@@ -18,7 +18,7 @@ import { Booking } from '../classes/booking.class';
   templateUrl: 'booking-item.page.html',
   styleUrls: ['booking-item.page.scss'],
 })
-export class BookingItemPage {
+export class BookingItemPage implements OnInit {
   id: string;
   bookingStatusList = ['Pendiente', 'Activa', 'Finalizada', 'Cancelada'];
   bookingForm = this.fromBuilder.group({
