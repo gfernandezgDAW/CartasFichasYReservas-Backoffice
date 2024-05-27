@@ -16,7 +16,7 @@ export class DateUtilsService {
   }
 
   daysJsUtcLocal(date?: Date | dayjs.Dayjs | string | null) {
-    return dayjs(date).utc(true).local();
+    return dayjs(date).set('milliseconds', 0).utc(true).local();
   }
 
   dateWithTimezoneOffset(value: string | number | Date) {
