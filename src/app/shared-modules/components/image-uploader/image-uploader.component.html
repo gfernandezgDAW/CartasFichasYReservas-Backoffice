@@ -6,7 +6,7 @@
     [nzCustomRequest]="handleUpload"
     class="image-uploader"
 >
-    <img class="image-uploader__img" *ngIf="loadedImage" [src]="getCompleteImageUrl()">
+    <img class="image-uploader__img" *ngIf="loadedImage" [src]="getCompleteImageUrl()" (error)="noImageFoundEvent($event)">
     <p class="image-uploader__icon" *ngIf="!loadedImage">
         <span nz-icon nzType="inbox"></span>
     </p>

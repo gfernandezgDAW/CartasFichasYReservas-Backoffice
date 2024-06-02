@@ -57,4 +57,9 @@ export class ImageUploaderComponent {
     this.loadedImage = undefined;
     this.uploadRes.emit(undefined);
   }
+
+  noImageFoundEvent(e: Event) {
+    const target = e.target as HTMLInputElement;
+    target.src = '../../../../assets/no-image.svg';
+  }
 }
